@@ -21,11 +21,12 @@ df_7d = df[df["time"] >= latest - pd.Timedelta(days=7)]
 
 st.header("📈 Last 7 Days")
 
-fig, ax = plt.subplots(figsize=(12, 4), dpi = 300)
+fig, ax = plt.subplots(figsize=(12, 5), dpi = 300)
 ax.plot(df_7d["time"], df_7d["current"], marker = 'o')
-ax.set_xlabel("Time")
-ax.set_ylabel("People")
-ax.set_title("Gym Occupancy (Last 7 Days)")
+labfs = 12; tfs = 16
+ax.set_xlabel("Time", fontsize = labfs)
+ax.set_ylabel("People", fontsize = labfs)
+ax.set_title("Occupancy (Last 7 Days)", fontsize = tfs)
 plt.xticks(rotation=45)
 
 st.pyplot(fig)
@@ -33,7 +34,7 @@ st.pyplot(fig)
 # ======================
 # 每天 × 每小時平均
 # ======================
-st.header("📊 Weekly Pattern (Day × Hour Average)")
+st.header("📊 Weekly Pattern")
 
 df["day"] = df["time"].dt.day_name()
 df["hour"] = df["time"].dt.hour
@@ -50,8 +51,9 @@ order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Su
 pivot = pivot.reindex(order)
 
 fig2, ax2 = plt.subplots(figsize=(12, 5), dpi = 300)
-sns.heatmap(pivot, cmap="YlOrRd", ax=ax2)
+sns.heatmap(pivot, cmap="YlOrRd", ax=ax2, annot=True)
 
 ax2.set_title("Average Occupancy by Day & Hour")
+ax2.set_ylabel('')
 
 st.pyplot(fig2)
