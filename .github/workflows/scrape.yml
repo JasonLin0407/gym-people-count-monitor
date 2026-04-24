@@ -1,0 +1,33 @@
+name: gym-scraper
+
+on:
+  schedule:
+    - cron: "*/30 * * * *" 
+  workflow_dispatch:         
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: install deps
+        run: pip install -r requirements.txt
+
+      - name: run scraper
+        run: python script.py
+
+      - name: commit results
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add data.csv
+          git commit -m "update data" || echo "no changes"
+          git push
