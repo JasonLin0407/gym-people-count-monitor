@@ -78,7 +78,7 @@ pivot = pivot.reindex(order)
 
 fig2, ax2 = plt.subplots(figsize=(12, 5), dpi=300)
 
-sns.heatmap(pivot, cmap="YlOrRd", ax=ax2)
+sns.heatmap(pivot, cmap="YlOrRd", ax=ax2, annot=True)
 
 ax2.set_title("Average Occupancy by Day & Hour")
 ax2.set_ylabel("")
