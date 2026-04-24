@@ -19,10 +19,10 @@ jobs:
           python-version: "3.10"
 
       - name: install deps
-        run: pip install -r requirements.txt
+        run: pip install -r ../../requirements.txt
 
       - name: run scraper
-        run: python script.py
+        run: python ../../script.py
 
       - name: commit results
         run: |
