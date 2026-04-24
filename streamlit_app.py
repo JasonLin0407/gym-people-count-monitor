@@ -32,7 +32,7 @@ fig, ax = plt.subplots(figsize=(12, 5), dpi=300)
 ax.plot(
     df_today["time"],
     df_today["current"],
-    marker="o", color="darkorange"
+    marker="o", color="darkorange",
     label="Today", linewidth = 3
 )
 
