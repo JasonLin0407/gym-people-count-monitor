@@ -1,9 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import csv
 
 URL = "https://rent.pe.ntu.edu.tw/"
+TW = timezone(timedelta(hours=8))
 
 def fetch():
     res = requests.get(URL, headers={"User-Agent": "Mozilla/5.0"})
@@ -18,7 +19,7 @@ def fetch():
         current = int(item.select(".ICI span")[0].get_text())
 
         return {
-            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "time": datetime.now(TW).strftime("%Y-%m-%d %H:%M:%S"),
             "current": current
         }
 
