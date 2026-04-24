@@ -9,10 +9,7 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: show files
-        run: ls -R
-        
+    steps:        
       - name: checkout repo
         uses: actions/checkout@v3
 
