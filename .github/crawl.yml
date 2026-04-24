@@ -26,7 +26,7 @@ jobs:
 
       - name: run scraper
         run: python script.py
-
+        
       - name: commit results
         run: |
           git config user.name github-actions
@@ -34,3 +34,5 @@ jobs:
           git add data.csv
           git commit -m "update data" || echo "no changes"
           git push
+
+      
