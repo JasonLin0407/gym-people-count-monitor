@@ -12,6 +12,9 @@ df = pd.read_csv("data.csv")
 df["time"] = pd.to_datetime(df["time"])
 
 df = df.sort_values("time")
+df["date"] = df["time"].dt.date
+df["hour"] = df["time"].dt.hour
+df["day"] = df["time"].dt.day_name()
 
 # ======================
 # 1️⃣ TODAY vs HISTORICAL HOURLY
