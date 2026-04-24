@@ -1,1 +1,0 @@
-# gym-people-count-monitor
