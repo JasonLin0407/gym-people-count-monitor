@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-st.title("🏋️ Gym Occupancy Dashboard")
+st.title("🏋️ NTU Gym Attendance Dashboard")
 
 # ======================
 # 讀資料
@@ -19,7 +19,7 @@ df["day"] = df["time"].dt.day_name()
 # ======================
 # 1️⃣ TODAY vs HISTORICAL HOURLY
 # ======================
-st.header("📈 Today vs Historical Hourly Pattern")
+st.header("📈 Today's Attendance")
 
 latest_date = df["date"].max()
 
@@ -61,7 +61,7 @@ st.pyplot(fig)
 # ======================
 # 2️⃣ WEEKLY HEATMAP
 # ======================
-st.header("📊 Weekly Pattern (Day × Hour)")
+st.header("📊 Historical Attendance Heatmap")
 
 df["day"] = df["time"].dt.day_name()
 df["hour"] = df["time"].dt.hour
