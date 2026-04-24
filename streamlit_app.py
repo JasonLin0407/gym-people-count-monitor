@@ -19,10 +19,10 @@ df = df.sort_values("time")
 latest = df["time"].max()
 df_7d = df[df["time"] >= latest - pd.Timedelta(days=7)]
 
-st.header("📈 Last 7 Days Trend")
+st.header("📈 Last 7 Days")
 
-fig, ax = plt.subplots(figsize=(12, 4))
-ax.plot(df_7d["time"], df_7d["current"])
+fig, ax = plt.subplots(figsize=(12, 4), dpi = 300)
+ax.plot(df_7d["time"], df_7d["current"], marker = 'o')
 ax.set_xlabel("Time")
 ax.set_ylabel("People")
 ax.set_title("Gym Occupancy (Last 7 Days)")
@@ -49,15 +49,9 @@ pivot = df.pivot_table(
 order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 pivot = pivot.reindex(order)
 
-fig2, ax2 = plt.subplots(figsize=(12, 5))
+fig2, ax2 = plt.subplots(figsize=(12, 5), dpi = 300)
 sns.heatmap(pivot, cmap="YlOrRd", ax=ax2)
 
 ax2.set_title("Average Occupancy by Day & Hour")
 
 st.pyplot(fig2)
-
-# ======================
-# raw data
-# ======================
-st.header("📄 Raw Data")
-st.dataframe(df_7d.tail(50))
