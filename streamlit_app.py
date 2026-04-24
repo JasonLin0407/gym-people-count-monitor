@@ -14,27 +14,51 @@ df["time"] = pd.to_datetime(df["time"])
 df = df.sort_values("time")
 
 # ======================
-# 過去 7 天
+# 1️⃣ TODAY vs HISTORICAL HOURLY
 # ======================
-latest = df["time"].max()
-df_7d = df[df["time"] >= latest - pd.Timedelta(days=7)]
+st.header("📈 Today vs Historical Hourly Pattern")
 
-st.header("📈 Last 7 Days")
+latest_date = df["date"].max()
 
-fig, ax = plt.subplots(figsize=(12, 5), dpi = 300)
-ax.plot(df_7d["time"], df_7d["current"], marker = 'o')
-labfs = 12; tfs = 16
-ax.set_xlabel("Time", fontsize = labfs)
-ax.set_ylabel("People", fontsize = labfs)
-ax.set_title("Occupancy (Last 7 Days)", fontsize = tfs)
+df_today = df[df["date"] == latest_date]
+df_hist = df[df["date"] != latest_date]
+
+# historical hourly average
+hourly_avg = df_hist.groupby("hour")["current"].mean()
+
+fig, ax = plt.subplots(figsize=(12, 5), dpi=300)
+
+# ---- Today line ----
+ax.plot(
+    df_today["time"],
+    df_today["current"],
+    marker="o", color="darkorange"
+    label="Today", linewidth = 3
+)
+
+# ---- Historical hourly pattern (mapped to today's timeline) ----
+hist_times = pd.to_datetime(str(latest_date)) + pd.to_timedelta(hourly_avg.index, unit="h")
+
+ax.plot(
+    hist_times,
+    hourly_avg.values,
+    label="Historical Avg (Hourly)",
+    color="silver", linewidth = 3
+)
+
+ax.set_xlabel("Time", fontsize=12)
+ax.set_ylabel("People", fontsize=12)
+ax.set_title("Today vs Historical Pattern", fontsize=16)
+
 plt.xticks(rotation=45)
+ax.legend()
 
 st.pyplot(fig)
 
 # ======================
-# 每天 × 每小時平均
+# 2️⃣ WEEKLY HEATMAP
 # ======================
-st.header("📊 Weekly Pattern")
+st.header("📊 Weekly Pattern (Day × Hour)")
 
 df["day"] = df["time"].dt.day_name()
 df["hour"] = df["time"].dt.hour
@@ -46,14 +70,14 @@ pivot = df.pivot_table(
     aggfunc="mean"
 )
 
-# 排序星期
 order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 pivot = pivot.reindex(order)
 
-fig2, ax2 = plt.subplots(figsize=(12, 5), dpi = 300)
-sns.heatmap(pivot, cmap="YlOrRd", ax=ax2, annot=True)
+fig2, ax2 = plt.subplots(figsize=(12, 5), dpi=300)
+
+sns.heatmap(pivot, cmap="YlOrRd", ax=ax2)
 
 ax2.set_title("Average Occupancy by Day & Hour")
-ax2.set_ylabel('')
+ax2.set_ylabel("")
 
 st.pyplot(fig2)
