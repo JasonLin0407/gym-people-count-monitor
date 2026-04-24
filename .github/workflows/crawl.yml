@@ -1,4 +1,4 @@
-name: gym-scraper
+name: gym-count-crawler
 
 on:
   schedule:
