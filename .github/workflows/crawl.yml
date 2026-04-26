@@ -2,7 +2,7 @@ name: gym-count-crawler
 
 on:
   schedule:
-    - cron: "*/20 * * * *" 
+    - cron: "*/20 0-14 * * *" 
   workflow_dispatch:         
 
 permissions:
